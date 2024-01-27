@@ -113,13 +113,22 @@ survival_plot <- ggsurvplot(fitmodel,
                             tables.height = 0.1,
                             tables.theme = theme_cleantable(),
                             ggtheme = theme_light(),
-                            title = "Kaplan-Meier Mortality Estimate",
+                            # title = "Kaplan-Meier Mortality Estimate",
                             xscale = "d_y",
                             break.time.by = 730,
                             xlab = "Time (years)",
                             ylab = "Survival probability",
-                            palette = "#2E9FDF"
+                            palette = "#2E9FDF", 
+                              base_size = 20,
+    font.main = c(20, "black"),
+    font.x = c(20, "black"),
+    font.y = c(20, "black"),
+    font.tickslab = c(20, "black"),
+    risk.table.fontsize = 6,
+    font.legend = c(16, "black"), 
+    pval.size = 10
 )
+survival_plot$cumevents$layers[[1]]$aes_params$size <- 6
 ggsave(
   filename = "~/Library/CloudStorage/OneDrive-TheUniversityofAuckland/YOD/Results/Mortality/KM plots/General.png",
   plot = survival_plot,
@@ -149,7 +158,7 @@ cox_gender <- ggsurvplot(survfitmodel_G,
            tables.height = 0.2,
            tables.theme = theme_cleantable(),
            ggtheme = theme_light(),
-           title = "Kaplan-Meier Mortality Estimate - Gender",
+          #  title = "Kaplan-Meier Mortality Estimate - Gender",
            xscale = "d_y",
            break.time.by = 730,
            xlab = "Time (years)",
@@ -159,7 +168,15 @@ cox_gender <- ggsurvplot(survfitmodel_G,
            legend.labs =
             c("Male", "Female"), 
            palette = 
-            c("#E7B800", "#2E9FDF") # custom color palettes.
+            c("#E7B800", "#2E9FDF"), # custom color palettes.
+            base_size = 20,
+    font.main = c(20, "black"),
+    font.x = c(20, "black"),
+    font.y = c(20, "black"),
+    font.tickslab = c(20, "black"),
+    risk.table.fontsize = 6,
+    font.legend = c(16, "black"), 
+    pval.size = 10
 )
 
 ggsave(
@@ -178,7 +195,7 @@ cox_age <- ggsurvplot(survfitmodel_A,
            tables.height = 0.2,
            tables.theme = theme_cleantable(),
            ggtheme = theme_light(),
-           title = "Kaplan-Meier Mortality Estimate - Age",
+          #  title = "Kaplan-Meier Mortality Estimate - Age",
            xscale = "d_y",
            break.time.by = 730,
            xlab = "Time (years)",
@@ -188,7 +205,15 @@ cox_age <- ggsurvplot(survfitmodel_A,
            legend.labs =
             c("Age < 60", "Age ≥ 60"), 
            palette = 
-            c("#E7B800", "#2E9FDF") # custom color palettes.
+            c("#E7B800", "#2E9FDF"), # custom color palettes.
+            base_size = 20,
+    font.main = c(20, "black"),
+    font.x = c(20, "black"),
+    font.y = c(20, "black"),
+    font.tickslab = c(20, "black"),
+    risk.table.fontsize = 6,
+    font.legend = c(16, "black"), 
+    pval.size = 10
 )
 ggsave(
   filename = "~/Library/CloudStorage/OneDrive-TheUniversityofAuckland/YOD/Results/Mortality/KM plots/Age.png", 
@@ -206,7 +231,7 @@ cox_E <- ggsurvplot(survfitmodel_E,
            tables.height = 0.2,
            tables.theme = theme_cleantable(),
            ggtheme = theme_light(),
-           title = "Kaplan-Meier Mortality Estimate - Ethnicity",
+          #  title = "Kaplan-Meier Mortality Estimate - Ethnicity",
            xscale = "d_y",
            break.time.by = 730,
            xlab = "Time (years)",
@@ -216,7 +241,15 @@ cox_E <- ggsurvplot(survfitmodel_E,
            legend.labs =
             c("Māori", "non-Māori"), 
            palette = 
-            c("#E7B800", "#2E9FDF") # custom color palettes.
+            c("#E7B800", "#2E9FDF"), # custom color palettes.
+            base_size = 20,
+    font.main = c(20, "black"),
+    font.x = c(20, "black"),
+    font.y = c(20, "black"),
+    font.tickslab = c(20, "black"),
+    risk.table.fontsize = 6,
+    font.legend = c(16, "black"), 
+    pval.size = 10
 )
   ggsave(
   filename = "~/Library/CloudStorage/OneDrive-TheUniversityofAuckland/YOD/Results/Mortality/KM plots/Ethnicity.png", 
@@ -235,7 +268,7 @@ cox_AD <- ggsurvplot(
            tables.height = 0.2,
            tables.theme = theme_cleantable(),
            ggtheme = theme_light(),
-           title = "Kaplan-Meier Mortality Estimate - AD",
+          #  title = "Kaplan-Meier Mortality Estimate - AD",
            xscale = "d_y",
            break.time.by = 730,
            xlab = "Time (years)",
@@ -245,7 +278,15 @@ cox_AD <- ggsurvplot(
            legend.labs =
             c("AD", "non-AD"), 
            palette = 
-            c("#E7B800", "#2E9FDF") # custom color palettes.
+            c("#E7B800", "#2E9FDF"), # custom color palettes.
+            base_size = 20,
+    font.main = c(20, "black"),
+    font.x = c(20, "black"),
+    font.y = c(20, "black"),
+    font.tickslab = c(20, "black"),
+    risk.table.fontsize = 6,
+    font.legend = c(16, "black"), 
+    pval.size = 10
 )
 ggsave(
   filename = "~/Library/CloudStorage/OneDrive-TheUniversityofAuckland/YOD/Results/Mortality/KM plots/AD.png", 
@@ -272,9 +313,17 @@ cox_Antid <- ggsurvplot(
            ncensor.plot = TRUE,      # plot the number of censored subjects at time t
            ncensor.plot.height = 0.1,
            legend.labs =
-            c("Anti-dementia use", "Not using anti-dementia"), 
+            c("Yes", "No"), 
            palette = 
-            c("#E7B800", "#2E9FDF") # custom color palettes.
+            c("#E7B800", "#2E9FDF"), # custom color palettes.
+            base_size = 20,
+    font.main = c(20, "black"),
+    font.x = c(20, "black"),
+    font.y = c(20, "black"),
+    font.tickslab = c(20, "black"),
+    risk.table.fontsize = 6,
+    font.legend = c(16, "black"), 
+    pval.size = 10
 )
 ggsave(
   filename = "~/Library/CloudStorage/OneDrive-TheUniversityofAuckland/YOD/Results/Mortality/KM plots/Anti-dementia.png", 
@@ -292,7 +341,7 @@ cox_Antip <- ggsurvplot(
            tables.height = 0.2,
            tables.theme = theme_cleantable(),
            ggtheme = theme_light(),
-          #  title = "Kaplan-Meier Mortality Estimate - Anti-dementia",
+          #  title = "Kaplan-Meier Mortality Estimate - Antipsychotics",
            xscale = "d_y",
            break.time.by = 730,
            xlab = "Time (years)",
@@ -300,9 +349,17 @@ cox_Antip <- ggsurvplot(
            ncensor.plot = TRUE,      # plot the number of censored subjects at time t
            ncensor.plot.height = 0.1,
            legend.labs =
-            c("Anti-psychotics use", "Not using anti-psychotics"), 
+            c("Yes", "No"), 
            palette = 
-            c("#E7B800", "#2E9FDF") # custom color palettes.
+            c("#E7B800", "#2E9FDF"), # custom color palettes.
+            base_size = 20,
+    font.main = c(20, "black"),
+    font.x = c(20, "black"),
+    font.y = c(20, "black"),
+    font.tickslab = c(20, "black"),
+    risk.table.fontsize = 6,
+    font.legend = c(16, "black"), 
+    pval.size = 10
 )
 ggsave(
   filename = "~/Library/CloudStorage/OneDrive-TheUniversityofAuckland/YOD/Results/Mortality/KM plots/Anti-psychotics.png", 

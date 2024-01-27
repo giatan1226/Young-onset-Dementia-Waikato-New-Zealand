@@ -157,6 +157,7 @@ antid_dosage <- dplyr::summarise(df_pharm_antid,
         max(total_daily_dosage, na.rm = TRUE),
         min(total_daily_dosage, na.rm = TRUE),
         mean(total_daily_dosage, na.rm = TRUE),
+        median(total_daily_dosage, na.rm = TRUE),
         sd(total_daily_dosage, na.rm = TRUE))
 
 write.csv(antid_dosage, file = "~/Library/CloudStorage/OneDrive-TheUniversityofAuckland/YOD/Results/Pharma/antid_dosage.csv", row.names = FALSE)

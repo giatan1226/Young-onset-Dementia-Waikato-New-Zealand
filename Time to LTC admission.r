@@ -195,30 +195,41 @@ write.csv(ph_results_E, file = "~/Library/CloudStorage/OneDrive-TheUniversityofA
 #General
 survfitmodel <- survfit(Surv(time_days, status) ~ 1, data = df_3_ddx_nhi)
 
+# Assuming survfitmodel is a survfit object previously created
 KM_plot <- ggsurvplot(
   survfitmodel,           # survfit object with calculated statistics.
-  conf.int = TRUE,         # show confidence intervals for point estimates for survival curves
-  title = "Kaplan-Meier LTCF Admission Estimate",
+  conf.int = TRUE,        # show confidence intervals for point estimates for survival curves
+  #title = "Kaplan-Meier LTCF Admission Estimate",
   xscale = "d_y",
-  xlab = "Time in years",   # customize X axis label.
+  xlab = "Time in years",  # customize X axis label.
   ylab = "Survival to LTCF admission",
-  break.time.by = 730,     # break X axis in time intervals by .
-  ggtheme = theme_light(), # customize plot and risk table with a theme.
-  risk.table = "abs_pct",  # absolute number and percentage at risk.
-  risk.table.height = 0.1, # Useful to change when you have multiple groups
-  cumevents = TRUE,
-  tables.height = 0.1,
-  tables.theme = theme_cleantable(),
-#  ncensor.plot = TRUE,      # plot the number of censored subjects at time t
-#  ncensor.plot.height = 0.2,
-  surv.median.line = "hv",  # add the median survival pointer.
-  palette = "#2E9FDF"
+  break.time.by = 730,    # break X axis in time intervals by .
+  ggtheme = theme_light(),# customize plot and risk table with a theme.
+  risk.table = "abs_pct", # absolute number and percentage at risk.
+  risk.table.height = 0.1,# Useful to change when you have multiple groups
+  cumevents = TRUE,       # show cumulative events table
+  tables.height = 0.1,    # height of the risk table
+  surv.median.line = "hv",# add the median survival pointer.
+  palette = "#2E9FDF",    # color for the plot
+  font.main = c(20, "black"),
+  font.x = c(20, "black"),
+  font.y = c(20, "black"),
+  font.tickslab = c(20, "black"),
+  risk.table.fontsize = 6,
+  font.legend = c(16, "black"),
 )
+
+# Adding the custom theme separately
+KM_plot$cumevents$layers[[1]]$aes_params$size <- 6
+
+# Print the plot
+print(KM_plot)
+
 
 ggsave(
   filename = "~/Library/CloudStorage/OneDrive-TheUniversityofAuckland/YOD/Results/LTCF Survival/KM_Plots/General.png", 
-  plot = KM_plot, width = 16, height = 9, dpi = 300)
-
+  plot = KM_plot, width = 16, height = 12, dpi = 300)
+ 
 #Gender
 survfitmodel_G <- survfit(Surv(time_days, status) ~ Gender, data = df_3_ddx_nhi)
 
@@ -226,7 +237,7 @@ KM_plot_G <- ggsurvplot(
     survfitmodel_G,           # survfit object with calculated statistics.
     pval = TRUE,             # show p-value of log-rank test.
     conf.int = TRUE,         # show confidence intervals for point estimates for survival curves
-    title = "Kaplan-Meier LTCF Admission Estimate - Gender",
+    # title = "Kaplan-Meier LTCF Admission Estimate - Gender",
     xscale = "d_y",
     xlab = "Time in years",   # customize X axis label.
     ylab = "Survival to LTCF admission",
@@ -238,8 +249,19 @@ KM_plot_G <- ggsurvplot(
     ncensor.plot.height = 0.15,
     surv.median.line = "hv",  # add the median survival pointer.
     palette = 
-     c("#E7B800", "#2E9FDF") # custom color palettes.
-      )
+     c("#E7B800", "#2E9FDF"), # custom color palettes.
+    legend.labs = c("Female", "Male"),
+    base_size = 20,
+    font.main = c(20, "black"),
+    font.x = c(20, "black"),
+    font.y = c(20, "black"),
+    font.tickslab = c(20, "black"),
+    risk.table.fontsize = 6,
+    font.legend = c(16, "black"), 
+    pval.size = 10
+)
+
+print(KM_plot_G)
 
   # Save the plot using ggsave
  ggsave(
@@ -253,7 +275,7 @@ KM_plot_A <- ggsurvplot(
   survfitmodel_A,           # survfit object with calculated statistics.
   pval = TRUE,             # show p-value of log-rank test.
   conf.int = TRUE,         # show confidence intervals for point estimates for survival curves
-  title = "Kaplan-Meier LTCF Admission Estimate - Age",
+  # title = "Kaplan-Meier LTCF Admission Estimate - Age",
   xscale = "d_y",
   xlab = "Time in years",   # customize X axis label.
   ylab = "Survival to LTCF admission",
@@ -266,7 +288,15 @@ KM_plot_A <- ggsurvplot(
   surv.median.line = "hv",  # add the median survival pointer.
   legend.labs = c("Age < 60", "Age ≥ 60"),
   palette = 
-    c("#E7B800", "#2E9FDF") # custom color palettes.
+    c("#E7B800", "#2E9FDF"), # custom color palettes.
+  base_size = 20,
+    font.main = c(20, "black"),
+    font.x = c(20, "black"),
+    font.y = c(20, "black"),
+    font.tickslab = c(20, "black"),
+    risk.table.fontsize = 6,
+    font.legend = c(16, "black"), 
+    pval.size = 10
 )
 
 ggsave(
@@ -280,7 +310,7 @@ KM_plot_AD <- ggsurvplot(
   survfitmodel_AD,           # survfit object with calculated statistics.
   pval = TRUE,             # show p-value of log-rank test.
   conf.int = TRUE,         # show confidence intervals for point estimates for survival curves
-  title = "Kaplan-Meier LTCF Admission Estimate - AD",
+  # title = "Kaplan-Meier LTCF Admission Estimate - AD",
   xscale = "d_y",
   xlab = "Time in years",   # customize X axis label.
   ylab = "Survival to LTCF admission",
@@ -293,7 +323,15 @@ KM_plot_AD <- ggsurvplot(
   surv.median.line = "hv",  # add the median survival pointer.
   legend.labs = c("AD", "Non-AD"),
   palette = 
-    c("#E7B800", "#2E9FDF") # custom color palettes.
+    c("#E7B800", "#2E9FDF"), # custom color palettes.
+  base_size = 20,
+    font.main = c(20, "black"),
+    font.x = c(20, "black"),
+    font.y = c(20, "black"),
+    font.tickslab = c(20, "black"),
+    risk.table.fontsize = 6,
+    font.legend = c(16, "black"), 
+    pval.size = 10
 )
 
 ggsave(
@@ -307,7 +345,7 @@ KM_plot_E <- ggsurvplot(
   survfitmodel_E,           # survfit object with calculated statistics.
   pval = TRUE,             # show p-value of log-rank test.
   conf.int = TRUE,         # show confidence intervals for point estimates for survival curves
-  title = "Kaplan-Meier LTCF Admission Estimate - Ethnicity",
+  # title = "Kaplan-Meier LTCF Admission Estimate - Ethnicity",
   xscale = "d_y",
   xlab = "Time in years",   # customize X axis label.
   ylab = "Survival to LTCF admission",
@@ -320,7 +358,15 @@ KM_plot_E <- ggsurvplot(
   surv.median.line = "hv",  # add the median survival pointer.
   legend.labs = c("Māori", "Non-Māori"),
   palette = 
-    c("#E7B800", "#2E9FDF") # custom color palettes.
+    c("#E7B800", "#2E9FDF"), # custom color palettes.
+  base_size = 20,
+    font.main = c(20, "black"),
+    font.x = c(20, "black"),
+    font.y = c(20, "black"),
+    font.tickslab = c(20, "black"),
+    risk.table.fontsize = 6,
+    font.legend = c(16, "black"), 
+    pval.size = 10
 )
 
 ggsave(
