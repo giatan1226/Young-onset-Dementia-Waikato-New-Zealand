@@ -62,6 +62,22 @@ df_non_unique_dates <- df_pharm_antip %>%
   filter(n() != n_distinct(DATE_DISPENSED)) %>%
   ungroup()
 
+# First antipsychotics after diagnosis
+df_pharm_antip <- df_pharm_antip %>%
+        filter(Date_dx < DATE_DISPENSED) %>%
+        group_by(Patient_no) %>%
+        arrange(DATE_DISPENSED) %>%
+        mutate(time_diff = as.numeric(difftime(DATE_DISPENSED, Date_dx, units = "days"))) %>%
+        arrange(Patient_no, time_diff)
+
+df_pharm_antip_time <- df_pharm_antip %>%
+        arrange(Patient_no, time_diff) %>%
+        distinct(Patient_no, .keep_all = TRUE)
+
+mean(df_pharm_antip_time$time_diff, na.rm = TRUE)
+median(df_pharm_antip_time$time_diff, na.rm = TRUE)
+range(df_pharm_antip_time$time_diff, na.rm = TRUE)
+sd(df_pharm_antip_time$time_diff, na.rm = TRUE)
 
 # Number of dispensings
 
